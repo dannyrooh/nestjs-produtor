@@ -5,10 +5,10 @@ import { Repository } from "typeorm/repository/Repository";
 import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable({ scope: Scope.REQUEST })
-export class ufRepository implements UfDataSource {
+export class UfRepository implements UfDataSource {
 
     constructor(
-        @InjectRepository(ufRepository)
+        @InjectRepository(UfModel)
         private readonly ufRepository: Repository<UfModel>) { }
 
     async findAll(): Promise<Array<UfModel>> {

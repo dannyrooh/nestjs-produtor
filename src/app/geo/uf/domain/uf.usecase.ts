@@ -1,4 +1,4 @@
-import { UfEntity } from "../entities/uf.entity";
+import { UfEntity } from "./entities/uf.entity";
 
 export default abstract class IUfUseCase {
 

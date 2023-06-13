@@ -1,40 +1,47 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm'
-import { UfEntity } from '../entities/uf.entity';
+import { UfEntity } from './entities/uf.entity';
 import IUfUseCase from './uf.usecase';
 import UfNotFoundError from './exception/ufnotfound.error';
 import UfEmptyError from './exception/ufempty.error';
+import UfDataSource from '../dataprovider/uf.datasource';
+import UfModelConverter from './converter/uf.model.converter';
 
 
 @Injectable({ scope: Scope.REQUEST })
 export class UfService implements IUfUseCase {
     constructor(
-        @InjectRepository(UfEntity)
-        private readonly ufRepository: Repository<UfEntity>) { }
+        private readonly ufDataSource: UfDataSource,
+        private readonly ufModelConverter: UfModelConverter
+    ) { }
 
     async findAll(): Promise<Array<UfEntity>> {
 
-        const ufs = await this.ufRepository.find();
+        const lista = await this.ufDataSource.findAll();
 
-        if (!ufs) throw new UfEmptyError();
+        if (!lista) throw new UfEmptyError();
 
-        return ufs;
+        return this.ufModelConverter.lista(lista);
 
     }
 
     async findOne(id: number): Promise<UfEntity> {
 
-        const uf = await this.ufRepository.findOne({ where: { id } });
+        const model = await this.ufDataSource.findOne(id);
 
-        if (!uf) throw new UfNotFoundError(id.toString());
+        if (!model) throw new UfNotFoundError(id.toString());
 
-        return uf;
+        return this.ufModelConverter.model(model);
     }
 
     async findOneByUf(uf: string): Promise<UfEntity> {
 
-        return await this.ufRepository.findOneBy({ uf });
+        const model = await this.ufDataSource.findOneByUf(uf);
+
+        if (!model) throw new UfNotFoundError(uf);
+
+        return this.ufModelConverter.model(model);
 
     }
 }

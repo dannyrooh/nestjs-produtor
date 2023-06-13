@@ -1,5 +1,5 @@
 import { Injectable, Scope } from "@nestjs/common";
-import { UfEntity } from "../../entities/uf.entity";
+import { UfEntity } from "../../domain/entities/uf.entity";
 import { UfResponse } from "../entities/uf.response";
 
 @Injectable({ scope: Scope.REQUEST })

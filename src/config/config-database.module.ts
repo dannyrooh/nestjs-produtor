@@ -14,7 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                 username: configService.get('DB_USERNAME', 'postgres'),
                 password: configService.get('DB_PASSWORD', 'masterkey'),
                 database: configService.get('DB_DATABASE', 'dbBrain'),
-                entities: [__dirname + './../app/geo/**/entities/*.entity{.js,.ts}'],
+                entities: [__dirname + './../app/geo/**/dataprovider/model/*.model{.js,.ts}'],
                 synchronize: false,
             })
         })
