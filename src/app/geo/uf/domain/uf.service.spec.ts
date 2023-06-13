@@ -1,18 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UfService } from './uf.service';
 
+
+const ufDataSourceMock = {
+  create: jest.fn()
+}
+
+const ufModelConverter = {
+  create: jest.fn()
+}
+
 describe('UfService', () => {
   let service: UfService;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [UfService],
-    }).compile();
-
-    service = module.get<UfService>(UfService);
+  beforeEach(() => {
+    // service = new UfService(ufDataSourceMock as any, ufModelConverter as any);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
 });

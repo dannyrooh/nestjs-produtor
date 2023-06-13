@@ -3,20 +3,20 @@ import { UfController } from './uf/transportlayer/uf.controller';
 import { UfService } from './uf/domain/uf.service';
 import { UfEntity } from './uf/domain/entities/uf.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import IUfUseCase from './uf/domain/uf.usecase';
+import UfUseCase from './uf/domain/uf.usecase';
 import UfResponseConverter from './uf/transportlayer/converter/uf.response.converter';
 import UfDataSource from './uf/dataprovider/uf.datasource';
 import { UfRepository } from './uf/dataprovider/repository/uf.repository';
 import { UfModel } from './uf/dataprovider/model/uf.model';
-import UfModelConverter from './uf/domain/converter/uf.model.converter';
+import UfModelConverter from './uf/dataprovider/converter/uf.model.converter';
 
 
-const UfUseCaseExport = {
-  provide: IUfUseCase,
+export const UfUseCaseExport = {
+  provide: UfUseCase,
   useClass: UfService
 }
 
-const UfDataProviderExport = {
+export const UfDataProviderExport = {
   provide: UfDataSource,
   useClass: UfRepository
 }
@@ -31,7 +31,8 @@ const UfDataProviderExport = {
     UfModelConverter,
     UfDataProviderExport],
   exports: [
-    UfUseCaseExport
+    UfUseCaseExport,
+    UfDataProviderExport
   ]
 })
 export class GeoModule { }

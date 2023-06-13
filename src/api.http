@@ -1,0 +1,10 @@
+GET http://localhost:3000/api/v1/geo/uf/1
+
+###
+GET http://localhost:3000/api/v1/geo/uf/uf/PR
+
+###
+GET http://localhost:3000/api/v1/geo/uf/uf/PRR
+
+###
+GET http://localhost:3000/api/v1/geo/uf
