@@ -5,7 +5,7 @@ export default class Util {
     }
 
     public static isOnlyChar(value: string): boolean {
-        return (value) ? value.replace(value[0], '').length == 0 : false;
+        return value.split(value[0]).join('').length == 0;
     }
 
 }

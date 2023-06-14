@@ -12,6 +12,8 @@ describe('Util', () => {
 
   it('should be true when some character', () => {
     expect(Util.isOnlyChar(cpf_invalido)).toBeFalsy;
+    expect(Util.isOnlyChar('11111111111')).toBeTruthy;
+
   });
 
   it('should be true when some character', () => {

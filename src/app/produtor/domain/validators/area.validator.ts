@@ -6,7 +6,7 @@ import AreaTotalError from "../exception/areatotal.error";
 
 export default class AreaValidator {
 
-    public static async execute(areaEntity: AreaEntity) {
+    public async execute(areaEntity: AreaEntity) {
 
         if ((areaEntity === null) || (areaEntity == undefined)) throw new AreaNaoInformadaError();
 
