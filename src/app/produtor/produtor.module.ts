@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
+import { CommonModule } from 'src/common/common.module';
+import AreaValidator from './domain/validators/area.validator';
+import CnpjCpfValidator from './domain/validators/cnpjcpf.validator';
 
 @Module({
-  //imports: [TypeOrmModule.forFeature([UfModel])],
+  imports: [CommonModule],
   controllers: [],
-  providers: [],
+  providers: [AreaValidator, CnpjCpfValidator],
   exports: []
 })
 export class ProdutorModule { }

@@ -22,8 +22,7 @@ export default class AreaValidator {
         validar_area(areaEntity.vegetacao)
         validar_area(areaEntity.total)
 
-        if (areaEntity.agricultavel + areaEntity.vegetacao > areaEntity.total)
-            throw new AreaTotalError()
+        if (areaEntity.agricultavel + areaEntity.vegetacao > areaEntity.total) throw new AreaTotalError()
 
     }
 
