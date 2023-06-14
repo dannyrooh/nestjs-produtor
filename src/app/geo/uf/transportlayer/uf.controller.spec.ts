@@ -26,7 +26,6 @@ describe('UfController', () => {
     let id = 1;
     const response = await controller.getById(id);
     expect(response.id).toEqual(id);
-
   });
 
   it('should be return UF="PR"', async () => {
