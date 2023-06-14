@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UfController } from './uf/transportlayer/uf.controller';
 import { UfService } from './uf/domain/uf.service';
-import { UfEntity } from './uf/domain/entities/uf.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import UfUseCase from './uf/domain/uf.usecase';
 import UfResponseConverter from './uf/transportlayer/converter/uf.response.converter';
@@ -23,7 +22,7 @@ export const UfDataProviderExport = {
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UfEntity, UfModel])],
+  imports: [TypeOrmModule.forFeature([UfModel])],
   controllers: [UfController],
   providers: [
     UfResponseConverter,

@@ -41,8 +41,4 @@ describe('UfService', () => {
     expect(() => service.findAll()).toBeDefined();
   });
 
-
-
-
-
 });
