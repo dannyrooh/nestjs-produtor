@@ -1,9 +1,7 @@
 export class UfResponse {
 
-    constructor(
-        id: number = 0,
-        uf: string = '',
-        nome: string = ''
-    ) { }
+    id: number;
+    uf: string;
+    nome: string;
 
 }

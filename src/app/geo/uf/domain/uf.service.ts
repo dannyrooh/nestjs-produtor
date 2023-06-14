@@ -4,7 +4,6 @@ import UfUseCase from './uf.usecase';
 import UfNotFoundError from './exception/ufnotfound.error';
 import UfEmptyError from './exception/ufempty.error';
 import UfDataSource from '../dataprovider/uf.datasource';
-import UfModelConverter from '../dataprovider/converter/uf.model.converter';
 
 
 @Injectable({ scope: Scope.REQUEST })
@@ -27,8 +26,6 @@ export class UfService implements UfUseCase {
     async findOne(id: number): Promise<UfEntity> {
 
         const entity = await this.ufDataSource.findOne(id);
-
-        console.log(entity);
 
         if (!entity) throw new UfNotFoundError(id.toString());
 

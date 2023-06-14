@@ -1,7 +1,6 @@
 import { Controller, Get, HttpException, HttpStatus, Param } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UfResponse } from './entities/uf.response';
-import IUfUseCase from '../domain/uf.usecase';
+import UfUseCase from '../domain/uf.usecase';
 import UfResponseConverter from './converter/uf.response.converter';
 
 @Controller('api/v1/geo')
@@ -9,7 +8,7 @@ import UfResponseConverter from './converter/uf.response.converter';
 export class UfController {
 
     constructor(
-        private readonly ufUseCase: IUfUseCase,
+        private readonly ufUseCase: UfUseCase,
         private readonly ufConverter: UfResponseConverter
     ) { }
 
