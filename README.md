@@ -63,5 +63,14 @@ em desenvolvimento pode ser utilizado o arquivo .env, é necessario criar ele na
 >
 
 
+### Massa de testes
 
+Para realizar os testes, rode  /script/massa_testes.sql.
+
+Na configuração atual, ele ira gerar 10.000 registros para cada cidade (30), cadastradas na tabela localidade. Os valores das áreas são geradas randomicamente.
+
+Sempre que este script for rodado, ele apagará todos os registros da tabela produtor. Caso queira gerar uma massa menor, no script altere o valor da variável *tota_loops* para o valor desejado por cidade.
+
+**declare total_loops integer = 10000;**
+ 
 
