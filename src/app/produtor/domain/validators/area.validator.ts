@@ -1,12 +1,13 @@
+import { Injectable, Scope } from "@nestjs/common";
 import { AreaEntity } from "../entities/area.entity";
 import AreaNaoInformadaError from "../exception/areanaoinformada.error";
 import AreaNegativaError from "../exception/areanegativa.error";
 import AreaTotalError from "../exception/areatotal.error";
 
-
+@Injectable({ scope: Scope.REQUEST })
 export default class AreaValidator {
 
-    public async execute(areaEntity: AreaEntity) {
+    public static async execute(areaEntity: AreaEntity) {
 
         if ((areaEntity === null) || (areaEntity == undefined)) throw new AreaNaoInformadaError();
 

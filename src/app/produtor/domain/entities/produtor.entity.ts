@@ -13,6 +13,5 @@ export class ProdutorEntity {
         public area: AreaEntity = null,
         public culturas: Array<CulturaEntity> = []
     ) { }
-
-
+ 
 }

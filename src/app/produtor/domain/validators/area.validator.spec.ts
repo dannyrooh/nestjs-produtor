@@ -7,9 +7,7 @@ import AreaValidator from "./area.validator";
 describe('AreaValidator', () => {
     let areaEntity: AreaEntity;
 
-    let areaValidator = new AreaValidator();
-
-    const valida = (entity = areaEntity, error = AreaNaoInformadaError) => expect(areaValidator.execute(entity)).rejects.toThrowError(error);
+    const valida = (entity = areaEntity, error = AreaNaoInformadaError) => expect(AreaValidator.execute(entity)).rejects.toThrowError(error);
 
     it('should be Exception AreaNaoInformadaError when null', async () => {
         valida(null)
