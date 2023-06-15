@@ -54,10 +54,10 @@ em desenvolvimento pode ser utilizado o arquivo .env, é necessario criar ele na
 
 >  .env
 > DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=masterkey
-DB_DATABASE=dbBrain
+> DB_PORT=5432
+> DB_USERNAME=postgres
+> DB_PASSWORD=masterkey
+> DB_DATABASE=dbBrain
 >
 >APP_PORT=3000
 >
