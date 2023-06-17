@@ -1,21 +1,21 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { UfEntity } from './entities/uf.entity';
-import UfUseCase from './uf.usecase';
+import UfUseCase from './usecase/uf.usecase';
 import UfNotFoundError from './exception/ufnotfound.error';
 import UfEmptyError from './exception/ufempty.error';
-import UfDataSource from '../dataprovider/uf.datasource';
+import UfDataProvider from './dataprovider/uf.dataprovider';
 
 
 @Injectable({ scope: Scope.REQUEST })
 export class UfService implements UfUseCase {
-    constructor(
-        private readonly ufDataSource: UfDataSource
 
+    constructor(
+        private readonly ufDataProvider: UfDataProvider
     ) { }
 
     async findAll(): Promise<Array<UfEntity>> {
 
-        const lista = await this.ufDataSource.findAll();
+        const lista = await this.ufDataProvider.findAll();
 
         if (!lista) throw new UfEmptyError();
 
@@ -25,7 +25,7 @@ export class UfService implements UfUseCase {
 
     async findOne(id: number): Promise<UfEntity> {
 
-        const entity = await this.ufDataSource.findOne(id);
+        const entity = await this.ufDataProvider.findOne(id);
 
         if (!entity) throw new UfNotFoundError(id.toString());
 
@@ -34,7 +34,7 @@ export class UfService implements UfUseCase {
 
     async findOneByUf(uf: string): Promise<UfEntity> {
 
-        const entity = await this.ufDataSource.findOneByUf(uf);
+        const entity = await this.ufDataProvider.findOneByUf(uf);
 
         if (!entity) throw new UfNotFoundError(uf);
 

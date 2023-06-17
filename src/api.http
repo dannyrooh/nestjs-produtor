@@ -8,3 +8,7 @@ GET http://localhost:3000/api/v1/geo/uf/uf/PRR
 
 ###
 GET http://localhost:3000/api/v1/geo/uf
+
+
+###
+GET http://localhost:3000/api/v1/localidade

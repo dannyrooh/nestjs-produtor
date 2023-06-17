@@ -1,5 +1,5 @@
 import { Injectable, Scope } from "@nestjs/common";
-import UfDataSource from "../uf.datasource";
+import UfDataSource from "../../domain/dataprovider/uf.dataprovider";
 import { UfModel } from "../model/uf.model";
 import { Repository } from "typeorm/repository/Repository";
 import { InjectRepository } from "@nestjs/typeorm";

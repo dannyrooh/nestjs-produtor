@@ -1,6 +1,6 @@
 import { Injectable, Scope } from "@nestjs/common";
 import { UfEntity } from "../../domain/entities/uf.entity";
-import { UfResponse } from "../entities/uf.response";
+import { UfResponse } from "../dto/uf.response";
 
 @Injectable({ scope: Scope.REQUEST })
 export default class UfResponseConverter {

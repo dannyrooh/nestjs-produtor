@@ -7,7 +7,7 @@ import { UfModel } from "../model/uf.model";
 export default class UfModelConverter {
 
     toEntity(model: UfModel): UfEntity {
-        return model ?? { ...model };
+        return (model) ? new UfEntity(model.id, model.uf, model.nome) : null;
     }
 
     toEntitylist(models: Array<UfModel>): Array<UfEntity> {

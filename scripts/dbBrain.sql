@@ -50,6 +50,7 @@ create table produtor(
     pro_nome varchar(100) not null,
     pro_fazenda varchar(100) not null,
     pro_localidade integer references localidade(loc_id),
+    pro_cnpj_cpf varchar(14) not null,
     pro_area_agricultavel numeric(15,6),
     pro_area_vegetacao numeric(15,6),
     pro_area_total numeric(15,6)

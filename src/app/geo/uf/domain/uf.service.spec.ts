@@ -1,5 +1,5 @@
 import { UfService } from './uf.service';
-import { UfRepositoryMemory } from '../dataprovider/repository/uf.repository.memory';
+import { UfRepositoryMemory } from '../datasource/repository/uf.repository.memory';
 import UfNotFoundError from './exception/ufnotfound.error';
 
 

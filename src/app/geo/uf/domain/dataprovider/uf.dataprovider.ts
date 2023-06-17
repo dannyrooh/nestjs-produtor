@@ -1,6 +1,6 @@
-import { UfEntity } from "./entities/uf.entity";
+import { UfEntity } from "../entities/uf.entity";
 
-export default abstract class UfUseCase {
+export default abstract class UfDataProvider {
 
     abstract findAll(): Promise<Array<UfEntity>>;
     abstract findOne(id: number): Promise<UfEntity>;

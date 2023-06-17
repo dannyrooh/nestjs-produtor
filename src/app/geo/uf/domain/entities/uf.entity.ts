@@ -1,8 +1,10 @@
 
 export class UfEntity {
 
-    id: number;
-    uf: string;
-    nome: string;
+    constructor(
+        public readonly id: number,
+        public readonly uf: string,
+        public readonly nome: string
+    ) { }
 
 }

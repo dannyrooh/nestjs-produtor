@@ -1,8 +1,8 @@
 import { UfController } from './uf.controller';
-import UfResponseConverter from './converter/uf.response.converter';
-import { UfRepositoryMemory } from '../dataprovider/repository/uf.repository.memory';
-import { UfService } from '../domain/uf.service';
-import UfNotFoundError from '../domain/exception/ufnotfound.error';
+import UfResponseConverter from '../converter/uf.response.converter';
+import { UfRepositoryMemory } from '../../datasource/repository/uf.repository.memory';
+import { UfService } from '../../domain/uf.service';
+import UfNotFoundError from '../../domain/exception/ufnotfound.error';
 
 describe('UfController', () => {
 
@@ -26,7 +26,6 @@ describe('UfController', () => {
     let id = 1;
     const response = await controller.getById(id);
     expect(response.id).toEqual(id);
-
   });
 
   it('should be return UF="PR"', async () => {
