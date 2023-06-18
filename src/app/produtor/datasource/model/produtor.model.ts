@@ -1,16 +1,16 @@
 import { LocalidadeModel } from "src/app/geo/localidade/datasource/model/localidade.model";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'produtor' })
 export class ProdutorModel {
-    @PrimaryColumn({ name: "pro_id" })
+    @PrimaryGeneratedColumn({ name: "pro_id" })
     id?: number;
 
     @Column({ name: "pro_nome", type: "varchar", length: 100, nullable: false })
     nome: string;
 
     @Column({ name: "pro_cnpj_cpf", type: "varchar", length: 15, nullable: false })
-    cpfcnpj: string;
+    cnpjcpf: string;
 
     @Column({ name: "pro_fazenda", type: "varchar", length: 100, nullable: false })
     fazenda: string;

@@ -5,7 +5,6 @@ import { CulturaModel } from "../model/Cultura.model";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import CulturaModelConverter from "../converter/cultura.model.converter";
-import { DeleteResult } from "typeorm/driver/mongodb/typings";
 
 @Injectable({ scope: Scope.REQUEST })
 export class CulturaRepository implements CulturaDataProvider {

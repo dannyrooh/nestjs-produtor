@@ -7,30 +7,90 @@ import ProdutorIdError from "../exception/ProdutorId.error";
 import ProdutorDataProvider from "../dataprovider/produtor.dataprovider";
 import ProdutorNotFoundError from "../exception/produtornotfoudn.error";
 import ProdutorNomeInvalido from "../exception/produtornomeinvalido.error";
+import ProdutorLocalidadeError from "../exception/produtorlocalidade.error";
+import ProdutorJaCadastradoError from "../exception/produtorjacadastrado.error";
+import { LocalidadeEntity } from "../../../geo/localidade/domain/entities/localidade.entity";
+import LocalidadeUseCase from "../../../geo/localidade/domain/usecase/localidade.usecase";
+import ProdutorIdLocalidadeInvalidoError from "../exception/produtoridlocalidade.invalido.error";
 
 @Injectable({ scope: Scope.REQUEST })
 export default class ProdutorServico implements ProdutorUseCase {
 
     constructor(
-        private readonly produtorDataProvider: ProdutorDataProvider
+        private readonly produtorDataProvider: ProdutorDataProvider,
+        private readonly localidadeUsercase: LocalidadeUseCase
+
     ) { }
 
-    private validarInput(produtorEntity: ProdutorEntity) {
-        CnpjCpfValidator.execute(produtorEntity.doc);
-        AreaValidator.execute(produtorEntity.area);
+    private async validarCnpjCpf(produtoEntity: ProdutorEntity) {
+
+        let entity = await this.produtorDataProvider.getByCnpjCpf(produtoEntity.doc);
+
+        if (entity) {
+            if (!produtoEntity.id) throw new ProdutorJaCadastradoError(produtoEntity.doc, entity.id.toString());
+
+            if ((produtoEntity.id) && (entity.id !== produtoEntity.id)) throw new ProdutorJaCadastradoError(produtoEntity.doc, entity.id.toString());
+        }
+
+    }
+
+    private async validarInput(produtorEntity: ProdutorEntity) {
+        await CnpjCpfValidator.execute(produtorEntity.doc);
+        await AreaValidator.execute(produtorEntity.area);
 
         if (produtorEntity.nome.trim().length <= 3) throw new ProdutorNomeInvalido();
+
+        if ((!produtorEntity.cidade_id) && (!produtorEntity.cidade)) throw new ProdutorLocalidadeError();
+
+        await this.validarCnpjCpf(produtorEntity);
     }
 
     private validarId(value: number) {
 
-        if ((!value) || (value == undefined) || (value <= 0))
+        if ((!value) || (value <= 0))
             throw new ProdutorIdError();
+    }
+
+    private async localidade(produtorEntity: ProdutorEntity): Promise<LocalidadeEntity> {
+
+        try {
+            if (produtorEntity.cidade_id) {
+                return await this.localidadeUsercase.findOne(produtorEntity.cidade_id);
+            }
+
+            let localidade: LocalidadeEntity;
+
+            try {
+                localidade = await this.localidadeUsercase.findByLocalidade(produtorEntity.cidade, produtorEntity.uf);
+            } catch (error) {
+                //
+            }
+
+
+            if (!localidade) {
+                return await this.localidadeUsercase.append(new LocalidadeEntity(0, produtorEntity.cidade, produtorEntity.uf))
+            }
+
+            return localidade;
+
+        } catch (error) {
+            throw new ProdutorLocalidadeError();
+        }
+
+
     }
 
     public async append(produtoEntity: ProdutorEntity): Promise<Number> {
 
-        this.validarInput(produtoEntity);
+
+        console.log(produtoEntity);
+
+        await this.validarInput(produtoEntity);
+
+
+        let localidade = await this.localidade(produtoEntity);
+
+        produtoEntity.cidade_id = localidade.id;
 
         const id = await this.produtorDataProvider.append(produtoEntity);
 
@@ -39,7 +99,9 @@ export default class ProdutorServico implements ProdutorUseCase {
 
     public async updated(produtoEntity: ProdutorEntity): Promise<boolean> {
 
-        this.validarInput(produtoEntity);
+        this.validarId(produtoEntity.id);
+
+        await this.validarInput(produtoEntity);
 
         const res = await this.produtorDataProvider.updated(produtoEntity);
 

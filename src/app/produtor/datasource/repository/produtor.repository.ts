@@ -21,20 +21,31 @@ export class ProdutorRepository implements ProdutorDataProvider {
             await this.produtorRepository.findOne({ where: { id } }));
     }
 
-    append(produtoEntity: ProdutorEntity): Promise<Number> {
-        throw new Error("Method not implemented.");
+    async append(produtorEntity: ProdutorEntity): Promise<Number> {
+
+        let model = this.produtorModelConverter.toModel(produtorEntity);
+        let obj = await this.produtorRepository.save(model);
+        return obj.id;
+
     }
 
-    updated(produtoEntity: ProdutorEntity): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async updated(produtorEntity: ProdutorEntity): Promise<boolean> {
+
+        let obj = await this.produtorRepository.save(this.produtorModelConverter.toModel(produtorEntity));
+        return Promise.resolve(obj.id > 0);
     }
 
-    delete(produtor: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async delete(id: number): Promise<boolean> {
+        let obj = await this.produtorRepository.delete({ id });
+
+        return Promise.resolve((obj.affected ?? 0) > 0);
     }
 
-    getByCnpjCpf(cnpjcpf: string): Promise<ProdutorEntity> {
-        throw new Error("Method not implemented.");
+    async getByCnpjCpf(cnpjcpf: string): Promise<ProdutorEntity> {
+
+        return this.produtorModelConverter.toEntity(
+            await this.produtorRepository.findOne({ where: { cnpjcpf } }));
+
     }
 
 }

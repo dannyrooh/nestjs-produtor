@@ -13,7 +13,7 @@ import LocalidadeUseCase from './localidade/domain/usecase/localidade.usecase';
 import LocalidadeService from './localidade/domain/localidade.service';
 import LocalidadeDataProvider from './localidade/domain/dataprovider/localidade.dataprovider';
 import { LocalidadeRepository } from './localidade/datasource/repository/localidade.repository';
-import LocalidadeResponseConverter from './localidade/transportlayer/converter/uf.response.converter';
+import LocalidadeResponseConverter from './localidade/transportlayer/converter/localidade.dto.converter';
 import LocalidadeModelConverter from './localidade/datasource/converter/localidade..model.converter';
 import { LocalidadeController } from './localidade/transportlayer/http/localidade.controller';
 import { UfController } from './uf/transportlayer/http/uf.controller';
@@ -25,7 +25,11 @@ export const LocalidadeUseCaseExport = { provide: LocalidadeUseCase, useClass: L
 export const LocalidadeDataProviderExport = { provide: LocalidadeDataProvider, useClass: LocalidadeRepository }
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UfModel, LocalidadeModel])],
+  imports: [
+    TypeOrmModule.forFeature(
+      [UfModel, LocalidadeModel],
+
+    )],
   controllers: [UfController, LocalidadeController],
   providers: [
     UfResponseConverter, UfUseCaseExport, UfModelConverter, UfDataProviderExport,

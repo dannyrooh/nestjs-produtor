@@ -16,6 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                 database: configService.get('DB_DATABASE', 'dbBrain'),
                 entities: [__dirname + './../app/**/**/datasource/model/*.model{.js,.ts}'],
                 synchronize: false,
+                logging: true
             })
         })
     ]

@@ -13,7 +13,6 @@ export class CulturaController {
         private readonly culturaConverter: CulturaResponseConverter
     ) { }
 
-
     @Get('')
     @ApiResponse({ status: 200, description: 'Cultura encontrado' })
     @ApiResponse({ status: 404, description: 'Cultura não encontrado' })

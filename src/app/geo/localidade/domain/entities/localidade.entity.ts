@@ -1,9 +1,14 @@
 export class LocalidadeEntity {
 
+
     constructor(
-        public readonly id: number,
-        public readonly nome: string,
-        public readonly uf: string
+        public id: number,
+        public nome: string,
+        public uf: string,
+        public ufid?: number
     ) { }
+
+
+
 
 }

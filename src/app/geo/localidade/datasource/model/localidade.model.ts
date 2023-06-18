@@ -11,8 +11,7 @@ export class LocalidadeModel {
     nome: string;
 
     @Column({ name: "loc_uf" })
-    uf: UfModel;
-
+    uf: number;
 
     @ManyToOne(type => UfModel, { eager: true })
     @JoinColumn({ name: "loc_uf", referencedColumnName: "id" })

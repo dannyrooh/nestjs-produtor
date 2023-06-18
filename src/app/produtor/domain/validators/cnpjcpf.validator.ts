@@ -19,12 +19,12 @@ export default class CnpjCpfValidator extends Util {
             throw new CpfInvalidoError()
     }
 
-    public static execute(doc: string) {
+    public static async execute(doc: string) {
 
         let validator = new CnpjCpfValidator();
 
-        if (doc.length == 11) { validator.cpf(doc) }
-        else if (doc.length == 14) { validator.cnpj(doc) }
+        if (doc.length == 11) { await validator.cpf(doc) }
+        else if (doc.length == 14) { await validator.cnpj(doc) }
         else throw new CnpjCpfInvalidoError();
 
     }

@@ -41,6 +41,8 @@ create table cultura(
 alter table cultura add constraint pk_cul_id primary key(cul_id);
 grant all on cultura to public;
 
+create unique index uk_cul_nome on cultura(cul_nome);
+
 --tabela de produtor
 create sequence seq_pro_id;
 grant all on sequence seq_pro_id to public;
