@@ -11,7 +11,6 @@ import ProdutorLocalidadeError from "../exception/produtorlocalidade.error";
 import ProdutorJaCadastradoError from "../exception/produtorjacadastrado.error";
 import { LocalidadeEntity } from "../../../geo/localidade/domain/entities/localidade.entity";
 import LocalidadeUseCase from "../../../geo/localidade/domain/usecase/localidade.usecase";
-import ProdutorIdLocalidadeInvalidoError from "../exception/produtoridlocalidade.invalido.error";
 
 @Injectable({ scope: Scope.REQUEST })
 export default class ProdutorServico implements ProdutorUseCase {
