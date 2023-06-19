@@ -49,7 +49,7 @@ Contem a classe que realiza a persistencia no banco de dados ou executa chamada 
 
 ### CONSIDERAÇÕES
 
-O objetivo dessa escolha de design de arquitetura, esta pautada na gestão de mudanças das estremidades,  é possível alterar a entrada, ou adicionar outras (dominio) , quanto mudar o destino dos dados, a saída (datasource), com baixo risco de impacto, vale ressaltar que uma das outras vantagens dessa arquitetura, é a aplicação de TDD/BDD, haja visto que os testes aplicados a regra de negócio, são imutaveis nessa hipótese de alteração da porta de entrada ou saída.
+O objetivo dessa escolha de design de arquitetura, esta pautada na gestão de mudanças das estremidades,  é possível alterar a entrada, ou adicionar outras (dominio) , quanto mudar o destino dos dados, a saída (datasource), com baixo risco de impacto, vale ressaltar que uma das outras vantagens dessa arquitetura, é na aplicação de TDD/BDD gerar endpoints específicos para o mock de teste e quando necessário , haja visto que os testes aplicados a regra de negócio são imutaveis.
 
 
 ## Instalação

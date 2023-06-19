@@ -1,25 +1,24 @@
 import { Injectable, Scope } from "@nestjs/common";
 import { CulturaEntity } from "../../domain/entities/Cultura.entity";
-import { CulturaResponse } from "../dto/cultura.response";
-import { CulturaRequest } from "../dto/cultura.request";
+import { CulturaDTO } from "../dto/cultura.dto";
 
 @Injectable({ scope: Scope.REQUEST })
-export default class CulturaResponseConverter {
+export default class CulturaDTOConverter {
 
-    response(entity: CulturaEntity): CulturaResponse {
-        return new CulturaResponse(entity.id, entity.nome, entity.ativa);
+    toDTO(entity: CulturaEntity): CulturaDTO {
+        return new CulturaDTO(entity.id, entity.nome, entity.ativa);
     }
 
-    resonse_list(entities: Array<CulturaEntity>): Array<CulturaResponse> {
-        return entities.flatMap(e => this.response(e));
+    toDTO_list(entities: Array<CulturaEntity>): Array<CulturaDTO> {
+        return entities.flatMap(e => this.toDTO(e));
     }
 
-    entity(request: CulturaRequest): CulturaEntity {
-        return new CulturaEntity(request.id, request.nome, request.ativa);
+    entity(dto: CulturaDTO): CulturaEntity {
+        return new CulturaEntity(dto.id, dto.nome, dto.ativa);
     }
 
-    entity_list(request: Array<CulturaRequest>): Array<CulturaEntity> {
-        return request.flatMap(e => this.entity(e));
+    entity_list(dto: Array<CulturaDTO>): Array<CulturaEntity> {
+        return dto.flatMap(e => this.entity(e));
     }
 
 

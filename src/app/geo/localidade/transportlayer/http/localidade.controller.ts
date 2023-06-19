@@ -34,7 +34,7 @@ export class LocalidadeController {
 
         try {
             const entity = await this.localidadeUseCase.findOne(id);
-            return this.localidadeConverter.toEntity(entity)
+            return this.localidadeConverter.toDto(entity)
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.NOT_FOUND);
         }
