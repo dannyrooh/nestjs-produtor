@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { AreaDTO } from "./area.dto";
 import { CulturaDTO } from "./cultura.dto";
+import { IsInt, IsString, IsOptional } from "class-validator";
 
 export class ProdutorDTO {
 
@@ -8,52 +9,64 @@ export class ProdutorDTO {
         title: 'ID do produtor ',
         description: '´Não deve ser informado quando for um cadastro novo',
     })
+    @IsInt()
     public id: number;
+
     @ApiProperty({
         title: 'CNPJ ou CPF ',
         description: 'Informe o CPF ou CNPJ',
     })
+    @IsString()
     public doc: string;
+
     @ApiProperty({
         title: 'Nome do produto '
     })
+    @IsString()
     public nome: string;
 
     @ApiProperty({
         title: 'Nome da fazenda '
-
     })
+    @IsString()
     public fazenda: string;
+
     @ApiProperty({
         title: 'Nome da cidade ',
         description: 'É obrigatório se não for informado o ID da cidade. Se a cidade não estiver cadastrada o sistema fará o cadastro automáticamente',
-    }
-    )
+    })
+    @IsString()
+    @IsOptional()
     public cidade?: string;
+
     @ApiProperty({
         title: 'Unidade Federativa do Brasil ',
         description: 'É obrigatório se não for informado o ID da cidade ',
-    }
-    )
+    })
+    @IsString()
+    @IsOptional()
     public uf?: string;
+
     @ApiProperty({
         title: 'Código da cidade',
         description: 'Quando for informado nãe é necessário informar nome da cidade ou uf ',
-    }
-    )
+    })
+    @IsInt()
+    @IsOptional()
     public cidade_id?: number;
+
     @ApiProperty({
         title: 'Áreas da fazenda',
         description: 'Informe  a área agricultavel, área de vegetação e área total da fazenda ',
     }
     )
     public area: AreaDTO;
+
     @ApiProperty({
         title: 'Cultura de Plantio',
         description: 'Nome da culturas de plantio',
-    }
-    )
-    public culturas: Array<CulturaDTO>;
+    })
+    public culturas: Array<string>;
 
     constructor(
         id: number,
@@ -66,7 +79,7 @@ export class ProdutorDTO {
         cidade_id?: number,
 
         area: AreaDTO = null,
-        culturas: Array<CulturaDTO> = []
+        culturas: Array<string> = []
     ) {
         this.id = id;
         this.doc = doc;

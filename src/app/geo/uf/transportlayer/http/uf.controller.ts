@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import UfUseCase from '../../domain/usecase/uf.usecase';
 import UfDTOConverter from '../converter/uf.dto.converter';
@@ -27,7 +27,7 @@ export class UfController {
     @Get('uf/:id')
     @ApiResponse({ status: 200, description: 'Uf encontrada' })
     @ApiResponse({ status: 404, description: 'Uf por Id não encontrada' })
-    async getById(@Param('id') id: number) {
+    async getById(@Param('id', ParseIntPipe) id: number) {
 
         try {
             const entity = await this.ufUseCase.findOne(id);

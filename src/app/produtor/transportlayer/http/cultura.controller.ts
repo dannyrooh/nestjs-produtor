@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import CulturaUseCase from '../../domain/usecase/Cultura.usercase';
 import CulturaDTOConverter from '../converter/cultura.dto.converter';
@@ -28,7 +28,7 @@ export class CulturaController {
     @Get(':id')
     @ApiResponse({ status: 200, description: 'Cultura encontrado' })
     @ApiResponse({ status: 404, description: 'Cultura não encontrado' })
-    async get(@Param('id') id: number) {
+    async get(@Param('id', ParseIntPipe) id: number) {
 
         try {
             return this.culturaConverter.toDTO(
@@ -74,7 +74,7 @@ export class CulturaController {
     @Delete(':id')
     @ApiResponse({ status: 201, description: 'Cultura excluída' })
     @ApiResponse({ status: 404, description: 'Cultura não encontrado' })
-    async delete(@Param('id') id: number) {
+    async delete(@Param('id', ParseIntPipe) id: number) {
 
         try {
             return await this.culturaUseCase.delete(id);

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import LocalidadeUseCase from '../../domain/usecase/localidade.usecase';
 import LocalidadeResponseConverter from '../converter/localidade.dto.converter';
@@ -30,7 +30,7 @@ export class LocalidadeController {
     @Get(':id')
     @ApiResponse({ status: 200, description: 'Cidade encontrada' })
     @ApiResponse({ status: 404, description: 'Cidade por Id não encontrada' })
-    async getById(@Param('id') id: number) {
+    async getById(@Param('id', ParseIntPipe) id: number) {
 
         try {
             const entity = await this.localidadeUseCase.findOne(id);

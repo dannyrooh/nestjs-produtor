@@ -1,6 +1,7 @@
 import { LocalidadeModel } from "src/app/geo/localidade/datasource/model/localidade.model";
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ProdutorCulturaModel } from "./produtor.cultura.model";
+import { CulturaModel } from "./cultura.model";
 
 @Entity({ name: 'produtor' })
 export class ProdutorModel {
@@ -35,7 +36,7 @@ export class ProdutorModel {
 
     // @ManyToMany(type => ProdutorCulturaModel, { eager: true })
     // @JoinColumn({ name: "pro_id", referencedColumnName: "produtor" })
-    // ProdutorCultura: LocalidadeModel;
+    // ProdutorCultura: ProdutorCulturaModel;
 
 
 

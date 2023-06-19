@@ -20,7 +20,7 @@ export default class ProdutorDTOConverter {
                 entity.area.total,
                 entity.area.agricultavel,
                 entity.area.vegetacao),
-            [])
+            entity.culturas)
     }
 
     lista(entities: Array<ProdutorEntity>): Array<ProdutorDTO> {
@@ -41,7 +41,7 @@ export default class ProdutorDTOConverter {
                 dto.area.total,
                 dto.area.agricultavel,
                 dto.area.vegetacao),
-            [])
+            dto.culturas)
 
     }
 
