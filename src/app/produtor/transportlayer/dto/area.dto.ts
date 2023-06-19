@@ -20,12 +20,12 @@ export class AreaDTO {
     public total: number;
 
     constructor(
-        private readonly _total: number = 0,
-        private readonly _agricultavel: number = 0,
-        private readonly _vegetacao: number = 0
+        total: number = 0,
+        agricultavel: number = 0,
+        vegetacao: number = 0
     ) {
-        this.total = _total;
-        this.agricultavel = _agricultavel;
-        this.vegetacao = _vegetacao;
+        this.total = total;
+        this.agricultavel = agricultavel;
+        this.vegetacao = vegetacao;
     }
 }

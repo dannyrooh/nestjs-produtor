@@ -1,7 +1,7 @@
 import { Controller, Get, HttpException, HttpStatus, Param } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import UfUseCase from '../../domain/usecase/uf.usecase';
-import UfResponseConverter from './../converter/uf.response.converter';
+import UfDTOConverter from '../converter/uf.dto.converter';
 
 @Controller('api/v1/geo')
 @ApiTags('Dados Geográficos')
@@ -9,22 +9,19 @@ export class UfController {
 
     constructor(
         private readonly ufUseCase: UfUseCase,
-        private readonly ufConverter: UfResponseConverter
+        private readonly ufConverter: UfDTOConverter
     ) { }
 
     @Get('uf')
     @ApiResponse({ status: 200, description: 'Lista de estados' })
     @ApiResponse({ status: 404, description: 'Não há estados cadastrados' })
     async getAll() {
-
-
         try {
             const objs = await this.ufUseCase.findAll();
             return this.ufConverter.lista(objs);
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.NOT_FOUND);
         }
-
     }
 
     @Get('uf/:id')

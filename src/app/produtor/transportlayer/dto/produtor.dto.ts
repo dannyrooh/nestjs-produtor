@@ -56,26 +56,26 @@ export class ProdutorDTO {
     public culturas: Array<CulturaDTO>;
 
     constructor(
-        private readonly _id: number,
-        private readonly _doc: string,
-        private readonly _nome: string,
-        private readonly _fazenda: string,
+        id: number,
+        doc: string,
+        nome: string,
+        fazenda: string,
 
-        private readonly _cidade?: string,
-        private readonly _uf?: string,
-        private readonly _cidade_id?: number,
+        cidade?: string,
+        uf?: string,
+        cidade_id?: number,
 
-        private readonly _area: AreaDTO = null,
-        private readonly _culturas: Array<CulturaDTO> = []
+        area: AreaDTO = null,
+        culturas: Array<CulturaDTO> = []
     ) {
-        this.id = _id;
-        this.doc = _doc;
-        this.nome = _nome;
-        this.fazenda = _fazenda;
-        this.cidade = _cidade;
-        this.uf = _uf;
-        this.area = _area;
-        this.culturas = _culturas;
+        this.id = id;
+        this.doc = doc;
+        this.nome = nome;
+        this.fazenda = fazenda;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.area = area;
+        this.culturas = culturas;
 
     }
 

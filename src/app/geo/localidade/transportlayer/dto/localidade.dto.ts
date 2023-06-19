@@ -27,16 +27,16 @@ export default class LocalidadeDTO {
 
 
     constructor(
-        readonly _id: number,
-        readonly _nome: string,
-        readonly _uf: string,
-        readonly _ufid?: number
-    ) {
-
-        this.id = _id;
-        this.nome = _nome;
-        this.uf = _uf;
-        this.ufid = _ufid;
+        id: number,
+        nome: string,
+        uf: string,
+        ufid?: number) 
+    {
+        this.id = id;
+        this.nome = nome;
+        this.uf = uf;
+        this.ufid = ufid;
     }
+
 
 }

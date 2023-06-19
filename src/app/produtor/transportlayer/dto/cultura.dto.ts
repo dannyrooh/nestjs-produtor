@@ -18,13 +18,13 @@ export class CulturaDTO {
     public ativa?: boolean;
 
     constructor(
-        private readonly _id?: number,
-        private readonly _nome?: string,
-        private readonly _ativa?: boolean
+        id?: number,
+        nome?: string,
+        ativa?: boolean
     ) {
-        this.id = _id;
-        this.nome = _nome;
-        this.ativa = _ativa;
+        this.id = id;
+        this.nome = nome;
+        this.ativa = ativa;
 
     }
 }

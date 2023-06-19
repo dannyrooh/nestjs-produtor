@@ -30,7 +30,7 @@ Um módulo é a representação de um domínio, e tem a finalidade de isolar uma
 A app contém os seguinte modulos:
  * geo (estado e a localidade)
  * produtor ( crud do cadastro do produtor)
- * report ( get estatisco do cadastro do produtor)
+ * report ( get estatistico do cadastro do produtor)
 
  Para visualizar os endpoint e testar, /api é a chamada do swagger
 
@@ -70,13 +70,21 @@ em desenvolvimento pode ser utilizado o arquivo .env, é necessario criar ele na
 
 
 >  .env
+
 > DB_HOST=localhost
+
 > DB_PORT=5432
+
 > DB_USERNAME=postgres
+
 > DB_PASSWORD=masterkey
+
 > DB_DATABASE=dbBrain
+
 >
+
 >APP_PORT=3000
+
 >
 
 

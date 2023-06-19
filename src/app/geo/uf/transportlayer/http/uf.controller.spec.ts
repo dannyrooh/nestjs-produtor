@@ -1,5 +1,5 @@
 import { UfController } from './uf.controller';
-import UfResponseConverter from '../converter/uf.response.converter';
+import UfDTOConverter from '../converter/uf.dto.converter';
 import { UfRepositoryMemory } from '../../datasource/repository/uf.repository.memory';
 import { UfService } from '../../domain/uf.service';
 import UfNotFoundError from '../../domain/exception/ufnotfound.error';
@@ -9,12 +9,12 @@ describe('UfController', () => {
   let controller: UfController;
   let service: UfService;
   let datasource: UfRepositoryMemory;
-  let converter: UfResponseConverter;
+  let converter: UfDTOConverter;
 
   beforeEach(async () => {
     datasource = new UfRepositoryMemory();
     service = new UfService(datasource);
-    converter = new UfResponseConverter;
+    converter = new UfDTOConverter;
     controller = new UfController(service, converter)
   });
 
