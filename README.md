@@ -25,10 +25,10 @@ Esta sendo aplicado o design pattern da Arquitetura Hexagonal. Foi adotado que c
 
 ### Modulo
 
-Um módulo é a representação de um domínio, e tem a finalidade de isolar uma regra de negrócio. 
+Um módulo é a representação de um domínio, e tem a finalidade de isolar uma regra de negócio. 
 
 A app contém os seguinte modulos:
- * geo (contém o estado e a localidade)
+ * geo (estado e a localidade)
  * produtor ( crud do cadastro do produtor)
  * report ( get estatisco do cadastro do produtor)
 
@@ -41,7 +41,7 @@ Tanto o request como o response (/dta/ dto.ts | request.ts | response.ts ) , sã
 
 #### DOMINIO 
 
-É a classe que contém a regra de negócio do módulo, ela responde para que a chamar. Caso haja erro na regra de negócio ela responde com o Exception.
+É a classe que contém a regra de negócio do módulo, ela responde para quem a chamar. Caso haja erro na regra de negócio ela responde com o Exception.
 A chamada de dados é realizada através do principio D do SOLID, dessa forma, a origem/destino dos dados podem vir tando de um banco de dados, quanto de um sistema de mensageria, independente do framework que seja aplicado.
 
 ### DATASOURCE
@@ -49,7 +49,7 @@ Contem a classe que realiza a persistencia no banco de dados ou executa chamada 
 
 ### CONSIDERAÇÕES
 
-O objetivo dessa arquitetura escolhida, foi que as mudanças tando de entrada, quanto de saída possam ser alteradas com um baixo risco de impacto, vale ressaltar que uma das vantagens dessa arquitetura, é a aplicação de TDD/BDD, haja visto que os testes aplicados a regra de negócio, são imutaveis nesse hipótese de alteração da porta de entrada ou saída.
+O objetivo dessa escolha de design de arquitetura, esta pautada na gestão de mudanças das estremidades,  é possível alterar a entrada, ou adicionar outras (dominio) , quanto mudar o destino dos dados, a saída (datasource), com baixo risco de impacto, vale ressaltar que uma das outras vantagens dessa arquitetura, é a aplicação de TDD/BDD, haja visto que os testes aplicados a regra de negócio, são imutaveis nessa hipótese de alteração da porta de entrada ou saída.
 
 
 ## Instalação
