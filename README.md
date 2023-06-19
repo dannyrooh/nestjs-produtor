@@ -5,30 +5,47 @@ Cadastro de Produtor Rural.
 Esta sendo aplicado o design pattern da Arquitetura Hexagonal. Foi adotado que cada módulo, terá a seguinte estrutura de pastas:
 
  - modulo
-    - dataprovider
-        - model
-        - repository
-    - domain
+    - datasource
         - converter
-        - entities
+        - model (entidade do banco de dados)
+        - repository (implementa a interface do dataprovider)
+        - repository-mock
+    - domain
+        - dataprovider (interface de comunicação com datasource/repository)
+        - converter
+        - entities (entidade das regras de negócio)
         - exception
+        - usecase (interface de comunicação com o transportlayer)
+        - service (implementa o useCase e executa o dataProvider)
     - transportlayer
         - converter
         - entities
+        - controller (realiza a chamada do usecase)
+           - http
 
 ### Modulo
 
 Um módulo é a representação de um domínio, e tem a finalidade de isolar uma regra de negrócio. 
 
+A app contém os seguinte modulos:
+ * geo (contém o estado e a localidade)
+ * produtor ( crud do cadastro do produtor)
+ * report ( get estatisco do cadastro do produtor)
+
+ Para visualizar os endpoint e testar, /api é a chamada do swagger
+
 #### TRANSPORTLAYER
 
-É a porta de entrada de uma requisição, ela conversa com o dominio da aplicação (regra de negócio) através de Interface, como estamos em javascript, fazemos através de classe abstrata. 
-Tanto o request como o response, são convertidos para interagir com o dominio, atraves de um conversor, para um entity. 
+É a porta de entrada de uma requisição, ela conversa com o dominio da aplicação (regra de negócio) através de Interface ( <regra>.usecase.ts)
+Tanto o request como o response (/dta/ dto.ts | request.ts | response.ts ) , são convertidos para interagir com o dominio, atraves de um conversor, para um entity. 
 
 #### DOMINIO 
 
 É a classe que contém a regra de negócio do módulo, ela responde para que a chamar. Caso haja erro na regra de negócio ela responde com o Exception.
 A chamada de dados é realizada através do principio D do SOLID, dessa forma, a origem/destino dos dados podem vir tando de um banco de dados, quanto de um sistema de mensageria, independente do framework que seja aplicado.
+
+### DATASOURCE
+Contem a classe que realiza a persistencia no banco de dados ou executa chamada a outras api ou sistemas de mensageria
 
 ### CONSIDERAÇÕES
 
@@ -72,5 +89,7 @@ Na configuração atual, ele ira gerar 10.000 registros para cada cidade (30), c
 Sempre que este script for rodado, ele apagará todos os registros da tabela produtor. Caso queira gerar uma massa menor, no script altere o valor da variável *tota_loops* para o valor desejado por cidade.
 
 **declare total_loops integer = 10000;**
+
+
  
 
