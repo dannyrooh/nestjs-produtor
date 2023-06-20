@@ -66,7 +66,7 @@ export class ProdutorDTO {
         title: 'Cultura de Plantio',
         description: 'Nome da culturas de plantio',
     })
-    public culturas: Array<string>;
+    public culturas: Array<CulturaDTO>;
 
     constructor(
         id: number,
@@ -79,7 +79,7 @@ export class ProdutorDTO {
         cidade_id?: number,
 
         area: AreaDTO = null,
-        culturas: Array<string> = []
+        culturas: Array<CulturaDTO> = []
     ) {
         this.id = id;
         this.doc = doc;

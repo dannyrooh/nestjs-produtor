@@ -1,4 +1,5 @@
 import { AreaEntity } from "./area.entity";
+import { CulturaEntity } from "./cultura.entity";
 
 export class ProdutorEntity {
 
@@ -13,7 +14,7 @@ export class ProdutorEntity {
         public cidade_id?: number,
 
         public area: AreaEntity = null,
-        public culturas: Array<string> = []
+        public culturas: Array<CulturaEntity> = []
     ) { }
 
 }

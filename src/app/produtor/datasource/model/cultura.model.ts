@@ -1,4 +1,5 @@
-import { Column, Entity, Index, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, ManyToMany, PrimaryGeneratedColumn, JoinTable } from "typeorm";
+import { ProdutorModel } from "./produtor.model";
 
 @Entity({ name: 'cultura' })
 
@@ -13,5 +14,10 @@ export class CulturaModel {
 
     @Column({ name: "cul_ativa", type: "boolean", default: true, nullable: false })
     ativa: boolean;
+
+
+    @ManyToMany(() => ProdutorModel)
+    @JoinTable({ name: 'produtor_cultura' })
+    public produtores?: ProdutorModel[];
 
 }

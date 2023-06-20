@@ -2,9 +2,14 @@ import { Injectable, Scope } from "@nestjs/common";
 import { ProdutorEntity } from "../../domain/entities/produtor.entity";
 import { ProdutorDTO } from "../dto/produtor.dto";
 import { AreaDTO } from "../dto/area.dto";
+import CulturaDTOConverter from "./cultura.dto.converter";
 
 @Injectable({ scope: Scope.REQUEST })
 export default class ProdutorDTOConverter {
+
+    constructor(
+        private readonly culturaDTOConverter: CulturaDTOConverter
+    ) { }
 
     toDTO(entity: ProdutorEntity): ProdutorDTO {
 
@@ -20,7 +25,8 @@ export default class ProdutorDTOConverter {
                 entity.area.total,
                 entity.area.agricultavel,
                 entity.area.vegetacao),
-            entity.culturas)
+            this.culturaDTOConverter.toDTO_list(entity.culturas)
+        )
     }
 
     lista(entities: Array<ProdutorEntity>): Array<ProdutorDTO> {
@@ -41,7 +47,9 @@ export default class ProdutorDTOConverter {
                 dto.area.total,
                 dto.area.agricultavel,
                 dto.area.vegetacao),
-            dto.culturas)
+            this.culturaDTOConverter.entity_list(dto.culturas)
+        )
+
 
     }
 

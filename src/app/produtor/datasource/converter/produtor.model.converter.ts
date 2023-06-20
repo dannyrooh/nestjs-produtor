@@ -2,9 +2,14 @@ import { Injectable, Scope } from "@nestjs/common";
 import { ProdutorModel } from "../model/produtor.model";
 import { ProdutorEntity } from "../../domain/entities/produtor.entity";
 import { AreaEntity } from "../../domain/entities/area.entity";
+import CulturaModelConverter from "./cultura.model.converter";
 
 @Injectable({ scope: Scope.REQUEST })
 export default class ProdutoModelConverter {
+
+    constructor(
+        private readonly culturaModelConverter: CulturaModelConverter
+    ) { }
 
     toEntity(model: ProdutorModel): ProdutorEntity {
 
@@ -34,7 +39,8 @@ export default class ProdutoModelConverter {
                 model.area_total,
                 model.area_agricultavel,
                 model.area_vegetacao),
-            []);
+            this.culturaModelConverter.toEntitylist(model.culturas)
+        );
     }
 
     toEntitylist(models: Array<ProdutorModel>): Array<ProdutorEntity> {
@@ -53,6 +59,7 @@ export default class ProdutoModelConverter {
         model.area_vegetacao = entity.area.vegetacao;
         model.area_total = entity.area.total;
         model.localidade = entity.cidade_id;
+        model.culturas = this.culturaModelConverter.toModellist(entity.culturas);
         return model;
     }
 

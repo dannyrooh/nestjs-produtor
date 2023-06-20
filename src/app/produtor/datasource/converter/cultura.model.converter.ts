@@ -21,4 +21,8 @@ export default class CulturaModelConverter {
         return model;
     }
 
+    toModellist(entity: Array<CulturaEntity>): Array<CulturaModel> {
+        return entity ? entity.flatMap(m => this.toModel(m)) : null;
+    }
+
 }

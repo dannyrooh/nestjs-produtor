@@ -1,5 +1,5 @@
 import { LocalidadeModel } from "src/app/geo/localidade/datasource/model/localidade.model";
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, JoinTable } from "typeorm";
 import { ProdutorCulturaModel } from "./produtor.cultura.model";
 import { CulturaModel } from "./cultura.model";
 
@@ -33,10 +33,22 @@ export class ProdutorModel {
     @JoinColumn({ name: "pro_localidade", referencedColumnName: "id" })
     localidadeModel: LocalidadeModel;
 
-
-    // @ManyToMany(type => ProdutorCulturaModel, { eager: true })
-    // @JoinColumn({ name: "pro_id", referencedColumnName: "produtor" })
-    // ProdutorCultura: ProdutorCulturaModel;
+    @ManyToMany(
+        () => CulturaModel,
+        culturaModel => culturaModel.id,
+        { onDelete: 'CASCADE', onUpdate: 'NO ACTION' })
+    @JoinTable({
+        name: 'produtor_cultura',
+        joinColumn: {
+            name: 'proc_produtor',
+            referencedColumnName: 'id'
+        },
+        inverseJoinColumn: {
+            name: 'proc_cultura',
+            referencedColumnName: 'id'
+        }
+    })
+    public culturas?: CulturaModel[];
 
 
 

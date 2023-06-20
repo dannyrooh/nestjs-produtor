@@ -18,7 +18,12 @@ export class ProdutorRepository implements ProdutorDataProvider {
     async get(id: number): Promise<ProdutorEntity> {
 
         return this.produtorModelConverter.toEntity(
-            await this.produtorRepository.findOne({ where: { id } }));
+            await this.produtorRepository.findOne({ 
+                where: { id } ,
+                relations: {
+                    culturas: true,
+                },
+            }));
     }
 
     async append(produtorEntity: ProdutorEntity): Promise<Number> {
