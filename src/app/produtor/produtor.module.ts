@@ -22,19 +22,47 @@ import CulturaResponseConverter from './transportlayer/converter/cultura.dto.con
 import { CulturaModel } from './datasource/model/cultura.model';
 import { GeoModule } from '../geo/geo.module';
 
-export const ProdutorUseCaseExport = { provide: ProdutorUseCase, useClass: ProdutorServico }
-export const ProdutorDataProduviderExport = { provide: ProdutorDataProvider, useClass: ProdutorRepository }
+export const ProdutorUseCaseExport = {
+  provide: ProdutorUseCase,
+  useClass: ProdutorServico,
+};
+export const ProdutorDataProduviderExport = {
+  provide: ProdutorDataProvider,
+  useClass: ProdutorRepository,
+};
 
-export const CulturaUseCaseExport = { provide: CulturaUseCase, useClass: CulturaService }
-export const CulturaDataProduviderExport = { provide: CulturaDataProvider, useClass: CulturaRepository }
+export const CulturaUseCaseExport = {
+  provide: CulturaUseCase,
+  useClass: CulturaService,
+};
+export const CulturaDataProduviderExport = {
+  provide: CulturaDataProvider,
+  useClass: CulturaRepository,
+};
 
 @Module({
-  imports: [CommonModule, GeoModule, TypeOrmModule.forFeature([ProdutorModel, ProdutorCulturaModel, CulturaModel])],
+  imports: [
+    CommonModule,
+    GeoModule,
+    TypeOrmModule.forFeature([
+      ProdutorModel,
+      ProdutorCulturaModel,
+      CulturaModel,
+    ]),
+  ],
   controllers: [ProdutorController, CulturaController],
   providers: [
-    AreaValidator, CnpjCpfValidator,
-    ProdutorUseCaseExport, ProdutorDataProduviderExport, ProdutorResponseConverter, ProdutoModelConverter,
-    CulturaUseCaseExport, CulturaDataProduviderExport, CulturaResponseConverter, CulturaModelConverter],
-  exports: []
+    AreaValidator,
+    CnpjCpfValidator,
+    ProdutorUseCaseExport,
+    ProdutorDataProduviderExport,
+    ProdutorResponseConverter,
+    ProdutoModelConverter,
+    CulturaUseCaseExport,
+    CulturaDataProduviderExport,
+    CulturaResponseConverter,
+    CulturaModelConverter,
+  ],
+  exports: [],
 })
-export class ProdutorModule { }
+export class ProdutorModule {}

@@ -18,21 +18,39 @@ import UfDTOConverter from './uf/transportlayer/converter/uf.dto.converter';
 import LocalidadeDTOConverter from './localidade/transportlayer/converter/localidade.dto.converter';
 import LocalidadeModelConverter from './localidade/datasource/converter/localidade..model.converter';
 
-export const UfUseCaseExport = { provide: UfUseCase, useClass: UfService }
-export const UfDataProviderExport = { provide: UfDataProvider, useClass: UfRepository }
+export const UfUseCaseExport = { provide: UfUseCase, useClass: UfService };
+export const UfDataProviderExport = {
+  provide: UfDataProvider,
+  useClass: UfRepository,
+};
 
-export const LocalidadeUseCaseExport = { provide: LocalidadeUseCase, useClass: LocalidadeService }
-export const LocalidadeDataProviderExport = { provide: LocalidadeDataProvider, useClass: LocalidadeRepository }
+export const LocalidadeUseCaseExport = {
+  provide: LocalidadeUseCase,
+  useClass: LocalidadeService,
+};
+export const LocalidadeDataProviderExport = {
+  provide: LocalidadeDataProvider,
+  useClass: LocalidadeRepository,
+};
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UfModel, LocalidadeModel],)],
+  imports: [TypeOrmModule.forFeature([UfModel, LocalidadeModel])],
   controllers: [UfController, LocalidadeController],
   providers: [
-    UfDTOConverter, UfUseCaseExport, UfModelConverter, UfDataProviderExport,
-    LocalidadeDTOConverter, LocalidadeUseCaseExport, LocalidadeModelConverter, LocalidadeDataProviderExport,
+    UfDTOConverter,
+    UfUseCaseExport,
+    UfModelConverter,
+    UfDataProviderExport,
+    LocalidadeDTOConverter,
+    LocalidadeUseCaseExport,
+    LocalidadeModelConverter,
+    LocalidadeDataProviderExport,
   ],
   exports: [
-    UfUseCaseExport, UfDataProviderExport, LocalidadeDataProviderExport, LocalidadeUseCaseExport
-  ]
+    UfUseCaseExport,
+    UfDataProviderExport,
+    LocalidadeDataProviderExport,
+    LocalidadeUseCaseExport,
+  ],
 })
-export class GeoModule { }
+export class GeoModule {}

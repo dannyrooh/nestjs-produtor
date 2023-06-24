@@ -13,19 +13,41 @@ import AreaPorEstadoService from './domain/service/area.por.estado.service';
 import QuantidadeFazendaUseCase from './domain/usecase/quantidade.fazenda.usecase';
 import QuantidadeFazendaService from './domain/service/quantidade.fazenda.service';
 
+export const AreaFazendaUseCaseExport = {
+  provide: AreaFazendaUseCase,
+  useClass: AreaFazendaService,
+};
+export const AreaPorCulturaUseCaseExport = {
+  provide: AreaPorCulturaUseCase,
+  useClass: AreaPorCulturaService,
+};
+export const AreaPorUsoSoloUseCaseExport = {
+  provide: AreaPorUsoSoloUseCase,
+  useClass: AreaPorUsoSoloService,
+};
+export const AreaPorEstadoUseCaseExport = {
+  provide: AreaPorEstadoUseCase,
+  useClass: AreaPorEstadoService,
+};
+export const QuantidadeFazendaUseCaseExport = {
+  provide: QuantidadeFazendaUseCase,
+  useClass: QuantidadeFazendaService,
+};
 
-export const AreaFazendaUseCaseExport = { provide: AreaFazendaUseCase, useClass: AreaFazendaService }
-export const AreaPorCulturaUseCaseExport = { provide: AreaPorCulturaUseCase, useClass: AreaPorCulturaService }
-export const AreaPorUsoSoloUseCaseExport = { provide: AreaPorUsoSoloUseCase, useClass: AreaPorUsoSoloService }
-export const AreaPorEstadoUseCaseExport = { provide: AreaPorEstadoUseCase, useClass: AreaPorEstadoService }
-export const QuantidadeFazendaUseCaseExport = { provide: QuantidadeFazendaUseCase, useClass: QuantidadeFazendaService }
-
-export const ReportDataProduviderExport = { provide: ReportDataProvider, useClass: ReportRepository }
+export const ReportDataProduviderExport = {
+  provide: ReportDataProvider,
+  useClass: ReportRepository,
+};
 
 @Module({
-    controllers: [ReportController],
-    providers: [ReportDataProduviderExport,
-        AreaFazendaUseCaseExport, AreaPorCulturaUseCaseExport, AreaPorUsoSoloUseCaseExport, AreaPorEstadoUseCaseExport, QuantidadeFazendaUseCaseExport]
+  controllers: [ReportController],
+  providers: [
+    ReportDataProduviderExport,
+    AreaFazendaUseCaseExport,
+    AreaPorCulturaUseCaseExport,
+    AreaPorUsoSoloUseCaseExport,
+    AreaPorEstadoUseCaseExport,
+    QuantidadeFazendaUseCaseExport,
+  ],
 })
-export class ReportModule { }
-
+export class ReportModule {}

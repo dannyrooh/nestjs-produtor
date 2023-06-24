@@ -1,145 +1,145 @@
-import { Injectable, Scope } from "@nestjs/common";
-import ProdutorUseCase from "../usecase/produtor.usercase";
-import { ProdutorEntity } from "../entities/produtor.entity";
-import CnpjCpfValidator from "../validators/cnpjcpf.validator";
-import AreaValidator from "../validators/area.validator";
-import ProdutorIdError from "../exception/ProdutorId.error";
-import ProdutorDataProvider from "../dataprovider/produtor.dataprovider";
-import ProdutorNotFoundError from "../exception/produtornotfoudn.error";
-import ProdutorNomeInvalido from "../exception/produtornomeinvalido.error";
-import ProdutorLocalidadeError from "../exception/produtorlocalidade.error";
-import ProdutorJaCadastradoError from "../exception/produtorjacadastrado.error";
-import { LocalidadeEntity } from "../../../geo/localidade/domain/entities/localidade.entity";
-import LocalidadeUseCase from "../../../geo/localidade/domain/usecase/localidade.usecase";
+import { Injectable, Scope } from '@nestjs/common';
+import ProdutorUseCase from '../usecase/produtor.usercase';
+import { ProdutorEntity } from '../entities/produtor.entity';
+import CnpjCpfValidator from '../validators/cnpjcpf.validator';
+import AreaValidator from '../validators/area.validator';
+import ProdutorIdError from '../exception/ProdutorId.error';
+import ProdutorDataProvider from '../dataprovider/produtor.dataprovider';
+import ProdutorNotFoundError from '../exception/produtornotfoudn.error';
+import ProdutorNomeInvalido from '../exception/produtornomeinvalido.error';
+import ProdutorLocalidadeError from '../exception/produtorlocalidade.error';
+import ProdutorJaCadastradoError from '../exception/produtorjacadastrado.error';
+import { LocalidadeEntity } from '../../../geo/localidade/domain/entities/localidade.entity';
+import LocalidadeUseCase from '../../../geo/localidade/domain/usecase/localidade.usecase';
 
 @Injectable({ scope: Scope.REQUEST })
 export default class ProdutorServico implements ProdutorUseCase {
+  constructor(
+    private readonly produtorDataProvider: ProdutorDataProvider,
+    private readonly localidadeUsercase: LocalidadeUseCase,
+  ) {}
 
-    constructor(
-        private readonly produtorDataProvider: ProdutorDataProvider,
-        private readonly localidadeUsercase: LocalidadeUseCase
+  private async validarCnpjCpf(produtoEntity: ProdutorEntity) {
+    const entity = await this.produtorDataProvider.getByCnpjCpf(
+      produtoEntity.doc,
+    );
 
-    ) { }
+    if (entity) {
+      if (!produtoEntity.id)
+        throw new ProdutorJaCadastradoError(
+          produtoEntity.doc,
+          entity.id.toString(),
+        );
 
-    private async validarCnpjCpf(produtoEntity: ProdutorEntity) {
-
-        let entity = await this.produtorDataProvider.getByCnpjCpf(produtoEntity.doc);
-
-        if (entity) {
-            if (!produtoEntity.id) throw new ProdutorJaCadastradoError(produtoEntity.doc, entity.id.toString());
-
-            if ((produtoEntity.id) && (entity.id !== produtoEntity.id)) throw new ProdutorJaCadastradoError(produtoEntity.doc, entity.id.toString());
-        }
-
+      if (produtoEntity.id && entity.id !== produtoEntity.id)
+        throw new ProdutorJaCadastradoError(
+          produtoEntity.doc,
+          entity.id.toString(),
+        );
     }
+  }
 
-    private async validarInput(produtorEntity: ProdutorEntity) {
-        await CnpjCpfValidator.execute(produtorEntity.doc);
-        await AreaValidator.execute(produtorEntity.area);
+  private async validarInput(produtorEntity: ProdutorEntity) {
+    await CnpjCpfValidator.execute(produtorEntity.doc);
+    await AreaValidator.execute(produtorEntity.area);
 
-        if (produtorEntity.nome.trim().length <= 3) throw new ProdutorNomeInvalido();
+    if (produtorEntity.nome.trim().length <= 3)
+      throw new ProdutorNomeInvalido();
 
-        if ((!produtorEntity.cidade_id) && (!produtorEntity.cidade)) throw new ProdutorLocalidadeError();
+    if (!produtorEntity.cidade_id && !produtorEntity.cidade)
+      throw new ProdutorLocalidadeError();
 
-        await this.validarCnpjCpf(produtorEntity);
+    await this.validarCnpjCpf(produtorEntity);
+  }
+
+  private validarId(value: number) {
+    if (!value || value <= 0) throw new ProdutorIdError();
+  }
+
+  private async localidade(
+    produtorEntity: ProdutorEntity,
+  ): Promise<LocalidadeEntity> {
+    try {
+      if (produtorEntity.cidade_id) {
+        return await this.localidadeUsercase.findOne(produtorEntity.cidade_id);
+      }
+
+      let localidade: LocalidadeEntity;
+
+      try {
+        localidade = await this.localidadeUsercase.findByLocalidade(
+          produtorEntity.cidade,
+          produtorEntity.uf,
+        );
+      } catch (error) {
+        //
+      }
+
+      if (!localidade) {
+        return await this.localidadeUsercase.append(
+          new LocalidadeEntity(0, produtorEntity.cidade, produtorEntity.uf),
+        );
+      }
+
+      return localidade;
+    } catch (error) {
+      throw new ProdutorLocalidadeError();
     }
+  }
 
-    private validarId(value: number) {
+  public async append(produtoEntity: ProdutorEntity): Promise<number> {
+    console.log(produtoEntity);
 
-        if ((!value) || (value <= 0))
-            throw new ProdutorIdError();
-    }
+    await this.validarInput(produtoEntity);
 
-    private async localidade(produtorEntity: ProdutorEntity): Promise<LocalidadeEntity> {
+    const localidade = await this.localidade(produtoEntity);
 
-        try {
-            if (produtorEntity.cidade_id) {
-                return await this.localidadeUsercase.findOne(produtorEntity.cidade_id);
-            }
+    produtoEntity.cidade_id = localidade.id;
 
-            let localidade: LocalidadeEntity;
+    const id = await this.produtorDataProvider.append(produtoEntity);
 
-            try {
-                localidade = await this.localidadeUsercase.findByLocalidade(produtorEntity.cidade, produtorEntity.uf);
-            } catch (error) {
-                //
-            }
+    return id;
+  }
 
+  public async updated(produtoEntity: ProdutorEntity): Promise<boolean> {
+    this.validarId(produtoEntity.id);
 
-            if (!localidade) {
-                return await this.localidadeUsercase.append(new LocalidadeEntity(0, produtorEntity.cidade, produtorEntity.uf))
-            }
+    await this.validarInput(produtoEntity);
 
-            return localidade;
+    const res = await this.produtorDataProvider.updated(produtoEntity);
 
-        } catch (error) {
-            throw new ProdutorLocalidadeError();
-        }
+    return res;
+  }
 
+  public async delete(id: number): Promise<boolean> {
+    this.validarId(id);
 
-    }
+    const res = await this.produtorDataProvider.delete(id);
 
-    public async append(produtoEntity: ProdutorEntity): Promise<Number> {
+    return res;
+  }
 
+  public async get(id: number): Promise<ProdutorEntity> {
+    this.validarId(id);
 
-        console.log(produtoEntity);
+    const produtorEntity = await this.produtorDataProvider.get(id);
 
-        await this.validarInput(produtoEntity);
+    if (!produtorEntity) throw new ProdutorNotFoundError(id.toString());
 
+    return produtorEntity;
+  }
 
-        let localidade = await this.localidade(produtoEntity);
+  public async getByCnpjCpf(cnpjcpf: string): Promise<ProdutorEntity> {
+    cnpjcpf = CnpjCpfValidator.unformat(cnpjcpf);
 
-        produtoEntity.cidade_id = localidade.id;
+    CnpjCpfValidator.execute(cnpjcpf);
 
-        const id = await this.produtorDataProvider.append(produtoEntity);
+    const produtorEntity = await this.produtorDataProvider.getByCnpjCpf(
+      cnpjcpf,
+    );
 
-        return id;
-    }
+    if (!produtorEntity) throw new ProdutorNotFoundError(cnpjcpf);
 
-    public async updated(produtoEntity: ProdutorEntity): Promise<boolean> {
-
-        this.validarId(produtoEntity.id);
-
-        await this.validarInput(produtoEntity);
-
-        const res = await this.produtorDataProvider.updated(produtoEntity);
-
-        return res;
-    }
-
-    public async delete(id: number): Promise<boolean> {
-
-        this.validarId(id);
-
-        const res = await this.produtorDataProvider.delete(id);
-
-        return res;
-    }
-
-    public async get(id: number): Promise<ProdutorEntity> {
-
-        this.validarId(id);
-
-        const produtorEntity = await this.produtorDataProvider.get(id);
-
-        if (!produtorEntity) throw new ProdutorNotFoundError(id.toString());
-
-        return produtorEntity;
-    }
-
-    public async getByCnpjCpf(cnpjcpf: string): Promise<ProdutorEntity> {
-
-        cnpjcpf = CnpjCpfValidator.unformat(cnpjcpf);
-
-        CnpjCpfValidator.execute(cnpjcpf);
-
-        const produtorEntity = await this.produtorDataProvider.getByCnpjCpf(cnpjcpf);
-
-        if (!produtorEntity) throw new ProdutorNotFoundError(cnpjcpf);
-
-        return produtorEntity;
-    }
-
-
-
+    return produtorEntity;
+  }
 }
